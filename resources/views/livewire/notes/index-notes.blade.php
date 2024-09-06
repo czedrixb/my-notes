@@ -19,6 +19,12 @@ new class extends Component {
         $colors = ['bg-red-200', 'bg-blue-200', 'bg-green-200', 'bg-yellow-200', 'bg-purple-200', 'bg-pink-200', 'bg-orange-200'];
         return $colors[array_rand($colors)];
     }
+
+    public function delete($id)
+    {
+        $note = Note::find($id);
+        $note->delete();
+    }
 }; ?>
 
 <div>
@@ -37,22 +43,21 @@ new class extends Component {
         <div class="grid gird-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-3">
             @foreach ($notes as $note)
                 <x-card>
-                    <x-slot name="slot" :class="$note->color . ' min-h-full'">
-                        <div class="flex flex-col">
-                            <div>
-                                <a href="" class="text-md font-bold hover:underline">
-                                    {{ Str::limit($note->title, 20, '...') }}
-                                </a>
-                            </div>
-                            <div class="mt-5">
-                                {{ Str::limit($note->body, 80, '...') }}
-                            </div>
-                            <div class="flex justify-between mt-5">
-                                <div class="text-xs">{{ $note->created_at->format('M d, Y') }}</div>
-                                <div class="flex justify-end gap-x-1">
-                                    <x-mini-button rounded icon="eye" primary></x-mini-button>
-                                    <x-mini-button rounded icon="trash" negative></x-mini-button>
-                                </div>
+                    <x-slot name="slot" :class="$note->color . ' min-h-full flex flex-col justify-between'">
+                        <div>
+                            <a href="" class="text-md font-bold hover:underline">
+                                {{ Str::limit($note->title, 20, '...') }}
+                            </a>
+                        </div>
+                        <div class="mt-5">
+                            {{ Str::limit($note->body, 80, '...') }}
+                        </div>
+                        <div class="flex justify-between items-center mt-5">
+                            <div class="text-xs">{{ $note->created_at->format('M d, Y') }}</div>
+                            <div class="flex justify-end gap-x-1">
+                                <x-mini-button rounded icon="eye" primary></x-mini-button>
+                                <x-mini-button rounded icon="trash" wire:click="delete('{{ $note->id }}')"
+                                    negative></x-mini-button>
                             </div>
                         </div>
                     </x-slot>

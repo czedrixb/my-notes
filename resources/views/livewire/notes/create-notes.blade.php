@@ -14,6 +14,11 @@ new class extends Component {
         ]);
 
         auth()->user()->notes()->create($validated);
+
+        $this->dispatch('toastr:info', [
+            'message' => 'Note created successfully',
+        ]);
+
         redirect(route('dashboard'));
     }
 }; ?>
@@ -23,8 +28,11 @@ new class extends Component {
         <div class="space-y-5">
             <x-input wire:model="title" label="Note Title" placeholder="Note title" />
             <x-input wire:model="body" label="Content" placeholder="What would you like to note" />
-            <div class="flext justify-end">
-                <x-button type="submit" label="Submit"></x-button>
+            <div class="flex justify-end">
+                <div class="flex gap-1">
+                    <x-button wire:navigate href="{{ route('dashboard') }}" label="Back" rose></x-button>
+                    <x-button type="submit" label="Submit"></x-button>
+                </div>
             </div>
             <x-errors />
         </div>
