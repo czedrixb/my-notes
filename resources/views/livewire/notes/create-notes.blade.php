@@ -28,8 +28,8 @@ new class extends Component {
             <x-input wire:model="body" label="Content" placeholder="What would you like to note" />
             <div class="flex justify-end">
                 <div class="flex gap-1">
-                    <x-button wire:navigate href="{{ route('dashboard') }}" label="Back" rose></x-button>
-                    <x-button type="submit" label="Submit"></x-button>
+                    <x-button wire:navigate href="{{ route('dashboard') }}" label="Back" negative flat></x-button>
+                    <x-button type="submit" label="Submit" spinner></x-button>
                 </div>
             </div>
             <x-errors />

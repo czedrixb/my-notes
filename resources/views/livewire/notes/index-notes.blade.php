@@ -5,12 +5,8 @@ use App\Models\Note;
 new class extends Component {
     public function with(): array
     {
-        // 'notes' => Auth::user()->notes()->orderBy('created_at', 'asc')->get(),
-
-        $notes = Note::get()->map(fn($note) => $note->setAttribute('color', $this->getRandomColor()));
-
         return [
-            'notes' => $notes,
+            'notes' => Auth::user()->notes()->orderBy('created_at', 'asc')->get()->map(fn($note) => $note->setAttribute('color', $this->getRandomColor())),
         ];
     }
 
@@ -23,6 +19,7 @@ new class extends Component {
     public function delete($id)
     {
         $note = Note::find($id);
+        $this->authorize('delete', $note);
         $note->delete();
         session()->flash('message', 'Note successfully deleted!');
         redirect(route('dashboard'));
@@ -31,7 +28,9 @@ new class extends Component {
 
 <div>
     <div class="flex justify-end mb-8">
-        <x-button wire:navigate href="{{ route('notes.create') }}" label="Create Note" icon="pencil"></x-button>
+        @if ($notes->isNotEmpty())
+            <x-button wire:navigate href="{{ route('notes.create') }}" label="Create Note" icon="pencil"></x-button>
+        @endif
     </div>
 
     @if ($notes->isEmpty())
@@ -47,7 +46,8 @@ new class extends Component {
                 <x-card>
                     <x-slot name="slot" :class="$note->color . ' min-h-full flex flex-col justify-between'">
                         <div>
-                            <a href="" class="text-md font-bold hover:underline">
+                            <a wire:navigate href="{{ route('notes.edit', $note) }}"
+                                class="text-md font-bold hover:underline">
                                 {{ Str::limit($note->title, 20, '...') }}
                             </a>
                         </div>
