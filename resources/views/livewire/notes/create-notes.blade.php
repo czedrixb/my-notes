@@ -15,9 +15,7 @@ new class extends Component {
 
         auth()->user()->notes()->create($validated);
 
-        $this->dispatch('toastr:info', [
-            'message' => 'Note created successfully',
-        ]);
+        session()->flash('message', 'Note successfully created!');
 
         redirect(route('dashboard'));
     }

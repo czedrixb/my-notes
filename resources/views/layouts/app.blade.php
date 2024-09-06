@@ -27,6 +27,23 @@
         <main>
             {{ $slot }}
         </main>
+
+        <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+        <script>
+            document.addEventListener('DOMContentLoaded', () => {
+                @if (session('message'))
+                    Swal.fire({
+                        toast: true,
+                        icon: 'success',
+                        title: '{{ session('message') }}',
+                        position: 'top-end',
+                        showConfirmButton: false,
+                        timer: 3000,
+                        timerProgressBar: true,
+                    });
+                @endif
+            });
+        </script>
     </div>
 </body>
 

@@ -24,6 +24,8 @@ new class extends Component {
     {
         $note = Note::find($id);
         $note->delete();
+        session()->flash('message', 'Note successfully deleted!');
+        redirect(route('dashboard'));
     }
 }; ?>
 
