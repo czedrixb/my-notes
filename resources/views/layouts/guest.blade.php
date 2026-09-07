@@ -13,22 +13,25 @@
 
     <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.bunny.net">
-    <link href="https://fonts.bunny.net/css?family=figtree:400,500,600&display=swap" rel="stylesheet" />
+    <link href="https://fonts.bunny.net/css?family=poppins:400,500,600,700&display=swap" rel="stylesheet" />
 
     <!-- Scripts -->
     @vite(['resources/css/app.css', 'resources/js/app.js'])
+    <wireui:scripts />
 </head>
 
-<body class="font-sans text-gray-900 antialiased">
-    <div class="min-h-screen flex flex-col sm:justify-center items-center pt-6 sm:pt-0 bg-gray-100">
-        <div>
-            <a href="/" wire:navigate class="flex items-center gap-2">
-                <x-application-logo class="w-20 h-20 fill-current text-gray-500" />
-                <div class="font-bold text-xl">My Notes</div>
+<body class="font-sans text-slate-900 antialiased">
+    <div class="relative min-h-screen flex flex-col sm:justify-center items-center pt-6 sm:pt-0 bg-white overflow-hidden">
+        <x-decorative-orbs />
+
+        <div class="animate-fade-up">
+            <a href="/" wire:navigate class="group flex items-center gap-2">
+                <x-application-logo class="w-14 h-14" />
+                <div class="font-bold text-2xl text-primary-600">Notes</div>
             </a>
         </div>
 
-        <div class="w-full sm:max-w-md mt-6 px-6 py-4 bg-white shadow-md overflow-hidden sm:rounded-lg">
+        <div class="w-full sm:max-w-md mt-6 px-6 py-8 bg-white rounded-3xl shadow-[0_8px_40px_rgba(109,40,217,0.08)] overflow-hidden animate-fade-up animate-delay-1">
             {{ $slot }}
         </div>
     </div>

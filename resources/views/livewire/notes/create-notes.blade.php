@@ -25,11 +25,11 @@ new class extends Component {
     <form wire:submit="store">
         <div class="space-y-5">
             <x-input wire:model="title" label="Note Title" placeholder="Note title" />
-            <x-input wire:model="body" label="Content" placeholder="What would you like to note" />
+            <x-textarea wire:model="body" label="Content" placeholder="What would you like to note" rows="8" />
             <div class="flex justify-end">
-                <div class="flex gap-1">
-                    <x-button wire:navigate href="{{ route('dashboard') }}" label="Back" negative flat></x-button>
-                    <x-button type="submit" label="Submit" spinner></x-button>
+                <div class="flex gap-2">
+                    <x-button wire:navigate href="{{ route('dashboard') }}" label="Back" flat></x-button>
+                    <x-button type="submit" label="Submit" spinner primary></x-button>
                 </div>
             </div>
             <x-errors />

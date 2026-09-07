@@ -13,7 +13,7 @@
 
     <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.bunny.net">
-    <link href="https://fonts.bunny.net/css?family=figtree:400,500,600&display=swap" rel="stylesheet" />
+    <link href="https://fonts.bunny.net/css?family=poppins:400,500,600,700&display=swap" rel="stylesheet" />
 
     <!-- Scripts -->
     @vite(['resources/css/app.css', 'resources/js/app.js'])
@@ -21,10 +21,16 @@
 </head>
 
 <body class="font-sans antialiased">
-    <div class="min-h-screen bg-gray-100 ">
-        <div class="bg-white">
-            <livewire:layout.navigation />
-        </div>
+    <div class="relative min-h-screen bg-white">
+        <x-decorative-orbs />
+
+        <livewire:layout.navigation />
+
+        @isset($header)
+            <header class="max-w-7xl mx-auto px-5 lg:px-8">
+                {{ $header }}
+            </header>
+        @endisset
 
         <!-- Page Content -->
         <main>
@@ -33,18 +39,28 @@
 
         <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
         <script>
+            function showSuccessToast(message) {
+                Swal.fire({
+                    toast: true,
+                    icon: 'success',
+                    title: message,
+                    position: 'top-end',
+                    showConfirmButton: false,
+                    timer: 3000,
+                    timerProgressBar: true,
+                    color: '#991b1b',
+                    iconColor: '#ef4444',
+                });
+            }
+
             document.addEventListener('DOMContentLoaded', () => {
                 @if (session('message'))
-                    Swal.fire({
-                        toast: true,
-                        icon: 'success',
-                        title: '{{ session('message') }}',
-                        position: 'top-end',
-                        showConfirmButton: false,
-                        timer: 3000,
-                        timerProgressBar: true,
-                    });
+                    showSuccessToast(@js(session('message')));
                 @endif
+            });
+
+            document.addEventListener('livewire:navigated', () => {
+                Livewire.on('toast', ({ message }) => showSuccessToast(message));
             });
         </script>
     </div>
